@@ -112,6 +112,9 @@ providers:
     options:
       scope: ['email', 'profile']
       avatar_size: 200
+      allowed_domains_check_enabled: false
+      allowed_domains: []
+      allowed_domains_custom_error_msg: ''
 
   linkedin:
     enabled: true
@@ -221,6 +224,9 @@ admin:
 |client_secret|The **Client Secret** Provided by Google when you register an application for OAuth2 authentication | `<string>` |
 |scope|An array of strings that define the OAuth2 scope. These can enable retrieving more data, but often require more permissions | e.g. `['email', 'profile']` |
 |avatar_size|The size in pixels of the avatar URL to store | e.g. `200` |
+|allowed_domains_check_enabled|Whether to check membership of specific domains | `true` \| [default: `false`] |
+|allowed_domains|A list of domains which are allowed to log in | e.g. `example.com` |
+|allowed_domains_custom_error_msg|A custom error message that is shown to users not belonging to an allowed domain | e.g. `Go away.` |
 
 #### Instagram
 
