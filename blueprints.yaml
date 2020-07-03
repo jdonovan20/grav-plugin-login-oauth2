@@ -522,7 +522,7 @@ form:
                           append: px
                           label: PLUGIN_LOGIN_OAUTH2.AVATAR_SIZE
 
-                        providers.google.options.allowed_domain_check_enabled:
+                        providers.google.options.allowed_domains_check_enabled:
                         type: toggle
                         label: PLUGIN_LOGIN_OAUTH2.ALLOWED_DOMAINS_CHECK_ENABLED
                         help: PLUGIN_LOGIN_OAUTH2.ALLOWED_DOMAINS_CHECK_ENABLED_HELP
