@@ -13,9 +13,12 @@ class GoogleProvider extends BaseProvider
     public function initProvider(array $options)
     {
         $options += [
-            'clientId'      => $this->config->get('providers.google.client_id'),
-            'clientSecret'  => $this->config->get('providers.google.client_secret'),
-            'hostedDomain'  => $this->config->get('providers.google.options.hd', '*')
+            'clientId'                      => $this->config->get('providers.google.client_id'),
+            'clientSecret'                  => $this->config->get('providers.google.client_secret'),
+            'hostedDomain'                  => $this->config->get('providers.google.options.hd', '*'),
+            'allowedDomainsCheckEnabled'    => $this->config->get('providers.google.options.allowed_domains_check_enabled', false),
+            'allowedDomains'                => $this->config->get('providers.google.options.allowed_domains', false),
+            'customError'                   => $this->config->get('providers.google.options.allowed_domains_custom_error_msg', "")
         ];
 
         parent::initProvider($options);

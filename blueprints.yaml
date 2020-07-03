@@ -522,6 +522,29 @@ form:
                           append: px
                           label: PLUGIN_LOGIN_OAUTH2.AVATAR_SIZE
 
+                        providers.google.options.allowed_domain_check_enabled:
+                        type: toggle
+                        label: PLUGIN_LOGIN_OAUTH2.ALLOWED_DOMAINS_CHECK_ENABLED
+                        help: PLUGIN_LOGIN_OAUTH2.ALLOWED_DOMAINS_CHECK_ENABLED_HELP
+                        highlight: 1
+                        default: 0
+                        options:
+                          1: Enabled
+                          0: Disabled
+                        validate:
+                          type: bool
+
+                        providers.google.options.allowed_domains:
+                          type: array
+                          label: PLUGIN_LOGIN_OAUTH2.ALLOWED_DOMAINS
+                          help: PLUGIN_LOGIN_OAUTH2.ALLOWED_DOMAINS_HELP
+                          value_only: true
+
+                        providers.google.options.allowed_domains_custom_error_msg:
+                          type: text
+                          label: PLUGIN_LOGIN_OAUTH2.ALLOWED_DOMAINS_CUSTOM_ERROR_MSG
+                          label: PLUGIN_LOGIN_OAUTH2.ALLOWED_DOMAINS_CUSTOM_ERROR_MSG_HELP
+                          placeholder: Add your custom error message here...
 
                     google_column_right:
                       type: column

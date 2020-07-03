@@ -9,9 +9,11 @@
         {% endfor %}
         <input type="hidden" name="task" value="login.oauth2" />
     </form>
+    {% if not config.plugins.login.no_login_mask %}
     <div class="oauth2-or">
         <span class="line"></span>
         <span class="or">or</span>
         <span class="line"></span>
     </div>
+    {% endif %}
 </div>

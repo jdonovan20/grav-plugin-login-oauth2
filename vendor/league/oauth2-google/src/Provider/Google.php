@@ -3,6 +3,7 @@
 namespace League\OAuth2\Client\Provider;
 
 use League\OAuth2\Client\Exception\HostedDomainException;
+use League\OAuth2\Client\Exception\AllowedDomainException;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use League\OAuth2\Client\Token\AccessToken;
 use League\OAuth2\Client\Tool\BearerAuthorizationTrait;
@@ -23,6 +24,21 @@ class Google extends AbstractProvider
      * @link https://developers.google.com/identity/protocols/OpenIDConnect#authenticationuriparameters
      */
     protected $hostedDomain;
+
+    /**
+     * @var bool This is an internal variable of GravCMS. If enabled, checks for Allowed Domains will be done
+     */
+    protected $allowedDomainsCheckEnabled;
+
+    /**
+     * @var string This is an internal variable of GravCMS used for authorizing users belonging to these domains
+     */
+    protected $allowedDomains;
+
+    /**
+     * @var string This is a GravCMS internal variable used for displaying a custom error message
+     */
+    protected $customError;
 
     /**
      * @var string If set, this will be sent to google as the "prompt" parameter.
@@ -55,6 +71,18 @@ class Google extends AbstractProvider
     {
         if (empty($options['hd']) && $this->hostedDomain) {
             $options['hd'] = $this->hostedDomain;
+        }
+
+        if (empty($options['allowed_domains_check_enabled']) && $this->allowedDomainsCheckEnabled) {
+            $options['allowed_domains_check_enabled'] = $this->allowedDomainsCheckEnabled;
+        }
+
+        if (empty($options['allowed_domains']) && $this->allowedDomains) {
+            $options['allowed_domains'] = $this->allowedDomains;
+        }
+
+        if (empty($options['custom_error']) && $this->customError) {
+            $options['custom_error'] = $this->customError;
         }
 
         if (empty($options['access_type']) && $this->accessType) {
@@ -123,6 +151,10 @@ class Google extends AbstractProvider
 
         $this->assertMatchingDomain($user->getHostedDomain());
 
+        if ($this->allowedDomainsCheckEnabled) {
+            $this->assertAllowedDomain($user->getEmail(), $this->allowedDomains, $this->customError);
+        }
+
         return $user;
     }
 
@@ -147,5 +179,20 @@ class Google extends AbstractProvider
         }
 
         throw HostedDomainException::notMatchingDomain($this->hostedDomain);
+    }
+
+    /**
+     * @throws AllowedDomainException If the asserted email address does not belong to the list of allowed domains.
+     */
+    protected function assertAllowedDomain($email, $allowedDomains, $customError)
+    {
+        $parts = preg_split('/@/', $email);
+        $domain = $parts[1];
+
+        if (is_array($allowedDomains) && in_array($domain, $allowedDomains)) {
+            return;
+        }
+
+        throw AllowedDomainException::notMatchingDomain($customError);
     }
 }
